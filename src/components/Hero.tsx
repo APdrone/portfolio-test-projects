@@ -28,7 +28,7 @@ export default function Hero() {
               View Portfolio
             </a>
             <a
-              href="https://github.com/scriptcrux" // Replace with your GitHub URL
+              href="https://github.com/APdrone" // Replace with your GitHub URL
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center border-2 border-gray-800 text-gray-800 px-4 py-3 rounded-full hover:bg-gray-800 hover:text-white transition-colors"
