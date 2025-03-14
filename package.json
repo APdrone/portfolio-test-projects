@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://test.scriptcrux.in/",
+  "homepage": "https://projects.scriptcrux.in/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
