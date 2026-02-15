@@ -19,7 +19,7 @@ export default function Hero() {
         {/* Left side: intro + CTAs */}
         <div>
           {/* Intro tagline */}
-          <p className="text-indigo-600 font-medium mb-3">👋 Hi, I’m John Doe — Senior SDET & Automation Architect</p>
+          <p className="text-indigo-600 font-medium mb-3">👋 Hi, I’m Aman Patwal — Senior SDET & Automation Architect</p>
 
           {/* Main headline */}
           <h1 className="text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
