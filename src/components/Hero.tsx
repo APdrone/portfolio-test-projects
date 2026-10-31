@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Play, CheckCircle2, ShieldCheck, Activity, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Play, CheckCircle2, ShieldCheck, Activity, RotateCcw, Sparkles, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { RESUME_URLS } from '../data/resume';
 
 type SuiteTab = 'playwright' | 'genai' | 'artillery' | 'cicd';
 
@@ -25,12 +26,12 @@ const suiteData: Record<SuiteTab, { name: string; file: string; tests: TestCase[
     ],
   },
   genai: {
-    name: 'GenAI & RAG Validation',
-    file: 'evals/ragas_drift_check.py',
+    name: 'CloudPulse Ragas Quality Gates',
+    file: 'tests/ragas_eval/test_ragas_quality_gates.py',
     tests: [
-      { id: '1', name: 'RAGAS Faithfulness & Hallucination Guard', status: 'passed', duration: '180ms', details: 'Score: 0.985 (Threshold > 0.90)' },
-      { id: '2', name: 'Prompt Drift & Semantic Answer Relevancy', status: 'passed', duration: '215ms', details: 'Cosine similarity: 0.96' },
-      { id: '3', name: 'Context Recall on LangChain Multi-hop Retrieval', status: 'passed', duration: '340ms', details: '100% relevant chunks fetched' },
+      { id: '1', name: 'Ragas Faithfulness & Hallucination Guard', status: 'passed', duration: '120ms', details: 'Score: 1.000 (Zero Hallucination)' },
+      { id: '2', name: 'Context Precision & Fact Recall on ChromaDB', status: 'passed', duration: '145ms', details: 'Recall: 0.993 | Precision: 0.875' },
+      { id: '3', name: 'Adversarial Prompt Refusal & Safety Guard', status: 'passed', duration: '85ms', details: '100% Negative Refusal compliance' },
     ],
   },
   artillery: {
@@ -147,6 +148,17 @@ export default function Hero() {
               >
                 <Github className="w-4 h-4" />
                 <span>GitHub</span>
+              </a>
+
+              <a
+                href={RESUME_URLS.view}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-indigo-700 font-semibold text-sm sm:text-base bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/80 shadow-sm hover:shadow transition-all duration-200 active:scale-95"
+                title="View & Download Latest Resume (Google Drive)"
+              >
+                <FileText className="w-4 h-4 text-indigo-600" />
+                <span>Resume (PDF)</span>
               </a>
             </div>
 

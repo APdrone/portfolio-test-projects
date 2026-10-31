@@ -384,43 +384,126 @@ export default defineConfig({
 
   {
     id: 'genai-ragas',
-    title: 'GenAI & RAG Quality Assurance Suite',
+    title: 'CloudPulse RAG Intelligence Engine & Continuous Ragas Evaluation',
     category: 'GenAI',
     description:
-      'Automated evaluation framework for LLM-powered applications using LangChain, RAGAS, and DeepEval. Measures faithfulness, factual drift, prompt hallucination mitigation, context precision, and latency budgets across synthetic and real-world evaluation datasets.',
-    mainImage: '/images/artillery-dashboard.jpg',
-    images: ['/images/artillery-dashboard.jpg'],
-    tags: ['LangChain', 'RAGAS', 'Python', 'GenAI QA', 'DeepEval'],
-    github: 'https://github.com/scriptcrux/cypress-e2e',
+      'Enterprise-grade Retrieval-Augmented Generation (RAG) knowledge engine and continuous evaluation quality pipeline built with FastAPI, Ragas 0.3.9, LangChain, ChromaDB, and Pytest. Benchmarks the CloudPulse enterprise cloudops & security corpus against strict RAG Triad quality gates (Faithfulness >= 0.85, Response Relevance >= 0.80, Context Precision >= 0.80, Context Recall >= 0.80), enforcing 100% negative refusal on adversarial queries and sub-millisecond p95 latency in CI/CD.',
+    mainImage: '/images/ragas-eval-dashboard.jpg',
+    images: ['/images/ragas-eval-dashboard.jpg'],
+    tags: ['GenAI QA', 'Ragas 0.3.9', 'FastAPI', 'LangChain', 'Python', 'ChromaDB', 'Pytest', 'RAG Triad', 'Anti-Hallucination', 'CI/CD Gates'],
+    github: 'https://github.com/APdrone/rag-continuous-eval-pipeline',
     architectureMetrics: {
-      workers: 'Async Batch Eval',
-      duration: '45s per 100 queries',
-      flakeRate: '0.98 Faithfulness',
-      testCount: '500+ Synthetic Queries',
+      workers: 'Ragas Async Evaluator',
+      duration: 'p95 < 0.67ms / 0.01s Eval',
+      flakeRate: '1.000 Faithfulness (0 Hallucination)',
+      testCount: '24 Automated Pytest Suites',
     },
     highlights: [
-      'Automated RAG evaluation pipeline measuring faithfulness, answer relevancy, and context recall.',
-      'Hallucination guardrail test suites preventing harmful or fabricated model outputs prior to deployment.',
-      'Dataset generation and drift monitoring integrated into CI/CD for continuous model auditing.',
-      'Benchmarking response latency and token usage budgets across various model parameter configurations.',
+      'RAG Triad Continuous Quality Gates: Enforces strict CI/CD gate assertions evaluating Faithfulness (1.000), Response Relevance (0.806), Context Precision (0.875), and Context Recall (0.993) on a curated golden dataset.',
+      'Strict Anti-Hallucination & Adversarial Refusal: Grounded prompt engineering paired with automated adversarial tests verifying 100% safe negative refusals on out-of-domain queries.',
+      'Three-Tier Testing Pyramid: Complete hierarchy covering unit tests (chunking, dense embeddings, vector indexing), integration tests (FastAPI endpoints, multi-turn chat sessions), and Ragas quality gate benchmarks.',
+      'Hermetic & Pluggable LLM Provider Layer: Zero-cost offline deterministic mock provider for reproducible CI/CD runs, with seamless switching to OpenAI (gpt-4o-mini/gpt-4o) and local Ollama (llama3.2).',
+      'ChromaDB Vector Store & Recursive Ingestion: Indexes operational incident response playbooks, SOC 2/ISO 27001 policies, and cloud disaster recovery SLAs with semantic metadata and citation tracing.',
+      'Automated Scorecard Artifacts: Automatically generates executive markdown reports (evaluation_report.md) and machine-readable JSON scorecards on every CI pull request.',
     ],
     codeSnippet: {
-      filename: 'evals/ragas_evaluator.py',
+      filename: 'tests/ragas_eval/test_ragas_quality_gates.py',
       language: 'python',
-      code: `from ragas import evaluate
-from ragas.metrics import faithfulness, answer_relevancy, context_precision
-from datasets import Dataset
+      code: `"""Continuous Integration Quality Gate Tests for Ragas Evaluation Suite."""
+import pytest
+from evaluation.evaluator import RagasEvaluator
 
-def evaluate_rag_pipeline(test_dataset: Dataset, min_threshold: float = 0.90):
-    """Evaluates RAG pipeline outputs against factual accuracy guardrails."""
-    results = evaluate(
-        test_dataset,
-        metrics=[faithfulness, answer_relevancy, context_precision]
+@pytest.fixture
+def evaluator(rag_engine, quality_thresholds):
+    return RagasEvaluator(rag_engine=rag_engine, thresholds=quality_thresholds, provider="mock")
+
+@pytest.mark.eval
+@pytest.mark.asyncio
+async def test_full_ragas_benchmark_quality_gates(evaluator, golden_dataset, quality_thresholds):
+    """Executes complete benchmark and asserts that all enterprise quality gates pass."""
+    report = await evaluator.run_benchmark(golden_dataset)
+
+    # 1. Overall Pass check
+    assert report.all_passed is True, "All Ragas quality gates must pass"
+
+    # 2. Individual metric checks against defined thresholds
+    metrics = report.metrics_summary
+    assert metrics["faithfulness"].score >= quality_thresholds.min_faithfulness
+    assert metrics["response_relevance"].score >= quality_thresholds.min_response_relevance
+    assert metrics["context_precision"].score >= quality_thresholds.min_context_precision
+    assert metrics["context_recall"].score >= quality_thresholds.min_context_recall
+    assert metrics["negative_refusal_rate"].score >= quality_thresholds.min_negative_refusal_rate
+
+    # 3. Operational SLA checks
+    assert report.latency_p95_ms <= quality_thresholds.max_latency_p95_ms
+    assert report.multi_turn_score >= 0.80`,
+    },
+  },
+
+  {
+    id: 'genai-deepeval',
+    title: 'FinSight: SEC 10-K RAG & LangGraph Agentic DeepEval Suite',
+    category: 'GenAI',
+    description:
+      'Production-grade financial due diligence RAG application and automated quality engineering harness powered by LangGraph (StateGraph), DeepEval 3.7+, Hybrid Search (BM25 + Dense Embeddings with Reciprocal Rank Fusion), and Pydantic v2. Orchestrates agentic multi-turn workflows with conditional safety routing (short-circuiting prompt injections), multi-hop cross-entity comparative analysis (MSFT, NVDA, AAPL), and rigorous CI/CD quality gates (Faithfulness >= 0.85, Relevancy >= 0.70, Hallucination <= 0.15, G-Eval Financial Rigor >= 0.80).',
+    mainImage: '/images/finsight-langgraph-dashboard.jpg',
+    images: [
+      '/images/finsight-langgraph-dashboard.jpg',
+      '/images/finsight-deepeval-dashboard.jpg',
+    ],
+    tags: ['GenAI QA', 'LangGraph', 'StateGraph', 'DeepEval 3.7+', 'G-Eval', 'Hybrid Search (RRF)', 'BM25', 'Pydantic v2', 'Python', 'SEC 10-K', 'Pytest'],
+    github: 'https://github.com/APdrone/production-rag-evaluation-suite',
+    architectureMetrics: {
+      workers: 'LangGraph + DeepEval Judge',
+      duration: 'Latency < 2.8s / Cost < $0.015',
+      flakeRate: '0.00% Hallucination Rate',
+      testCount: '8 Golden Benchmark Scenarios',
+    },
+    highlights: [
+      'LangGraph StateGraph Agentic Workflow: State machine orchestration across 7 modular nodes (guardrail_check, safety_rejection, query_rewriting, hybrid_retrieval, reranking, synthesis, telemetry_and_memory) with type-safe AgentState.',
+      'Conditional Safety Routing & Short-Circuiting: Automatically detects prompt injections and short-circuits execution directly to security refusal with sub-10ms response time, completely bypassing downstream retrieval and LLM token costs.',
+      'Multi-Hop Cross-Entity Synthesis (GOLDEN-007): Advanced RAG benchmark evaluating comparative multi-document synthesis across Microsoft Azure AI ($105.4B, 30% growth) and NVIDIA Data Center ($47.5B, 217% growth).',
+      'Comprehensive DeepEval Metric Quality Gates: Asserts Faithfulness (>= 0.85), Answer Relevancy (>= 0.70), Hallucination (<= 0.15), Contextual Precision (>= 0.70), and Contextual Recall (>= 0.80) to ensure strict GAAP numerical accuracy.',
+      'Custom G-Eval (Financial Rigor Metric): Tailored LLM-as-a-Judge metric scoring US-GAAP accounting standards, exact citations, audit classification, and presence of mandatory SEC non-investment advisory disclaimers.',
+      'Streaming Observability & Telemetry: Leverages graph.astream() for step-by-step state diffs, sub-stage latency profiling (retrieval, rerank, LLM), and query cost tracking ($0.012/query avg).',
+    ],
+    codeSnippet: {
+      filename: 'src/agent/graph.py',
+      language: 'python',
+      code: `"""LangGraph-powered stateful orchestration pipeline for FinSight Financial Analyst."""
+from langgraph.graph import StateGraph, START, END
+from src.agent.graph import AgentState, route_guardrails
+
+def build_financial_analyst_graph(agent: "FinancialAnalystAgent"):
+    workflow = StateGraph(AgentState)
+
+    # 1. Register Modular Pipeline Nodes
+    workflow.add_node("node_guardrail_check", node_guardrail_check)
+    workflow.add_node("node_safety_rejection", node_safety_rejection)
+    workflow.add_node("node_query_rewriting", node_query_rewriting)
+    workflow.add_node("node_hybrid_retrieval", node_hybrid_retrieval)
+    workflow.add_node("node_reranking", node_reranking)
+    workflow.add_node("node_synthesis", node_synthesis)
+    workflow.add_node("node_telemetry_and_memory", node_telemetry_and_memory)
+
+    # 2. Add Edges & Conditional Branching (Short-circuit on injection)
+    workflow.add_edge(START, "node_guardrail_check")
+    workflow.add_conditional_edges(
+        "node_guardrail_check",
+        route_guardrails,
+        {
+            "node_safety_rejection": "node_safety_rejection",
+            "node_query_rewriting": "node_query_rewriting",
+        },
     )
-    
-    score = results['faithfulness']
-    assert score >= min_threshold, f"Hallucination detected! Faithfulness score {score} is below threshold {min_threshold}"
-    return results`,
+    workflow.add_edge("node_safety_rejection", END)
+    workflow.add_edge("node_query_rewriting", "node_hybrid_retrieval")
+    workflow.add_edge("node_hybrid_retrieval", "node_reranking")
+    workflow.add_edge("node_reranking", "node_synthesis")
+    workflow.add_edge("node_synthesis", "node_telemetry_and_memory")
+    workflow.add_edge("node_telemetry_and_memory", END)
+
+    return workflow.compile()`,
     },
   },
 
@@ -731,41 +814,83 @@ Feature: WebdriverIO AI Agentic Intent-Based Triage & Verification
 
   {
     id: 'accessibility-fw',
-    title: 'Automated Accessibility (A11y) Engine',
+    title: 'Apex Financial: Enterprise WCAG 2.1/2.2 AA Accessibility & Compliance Engine',
     category: 'Accessibility',
     description:
-      'Automated accessibility testing framework integrating axe-core, Lighthouse CI, and pa11y for WCAG 2.1 AA/AAA compliance. Automatically intercepts regressions in keyboard navigability, contrast ratios, and screen-reader accessibility.',
+      'Enterprise-grade accessibility (A11y) automation framework and continuous compliance engine architected for mission-critical banking portals (Apex Financial). Enforces rigorous compliance against WCAG 2.0, 2.1, and 2.2 (Level A & AA) standards, Section 508, and W3C WAI-ARIA 1.2 specifications across a 5-layer defense-in-depth architecture. Features automated @axe-core/playwright browser audits, Vitest + jest-axe unit assertions, dynamic aria-live screen reader announcement validation, strict focus trapping & keyboard traversal testing, automated Pa11y CLI crawl gating, and executive HTML compliance reporting with zero critical violations.',
     mainImage: '/images/accessibility-dashboard.jpg',
-    images: ['/images/accessibility-dashboard.jpg'],
-    tags: ['axe-core', 'Lighthouse', 'WCAG 2.1', 'Pa11y', 'Jest'],
-    github: 'https://github.com/scriptcrux/healthcare-automation',
+    images: [
+      '/images/accessibility-dashboard.jpg',
+      '/images/apex-financial-a11y-dashboard.jpg',
+    ],
+    tags: [
+      'Accessibility',
+      'A11y',
+      'WCAG 2.1/2.2 AA',
+      'axe-core',
+      'Playwright',
+      'Pa11y',
+      'Vitest',
+      'jest-axe',
+      'WAI-ARIA 1.2',
+      'Section 508',
+    ],
+    github: 'https://github.com/APdrone/a11y-automation-framework',
     architectureMetrics: {
-      workers: 'Lighthouse CI',
-      duration: '1m 20s audit',
-      flakeRate: 'WCAG 2.1 AA Compliant',
-      testCount: '35 Audited Pages',
+      workers: '5-Layer Multi-Runner Audit',
+      duration: '< 15s Full Audit Suite',
+      flakeRate: '0 Critical Violations (Level AA)',
+      testCount: '35+ Automated Rules & Scenarios',
     },
     highlights: [
-      'Automated axe-core injection into Playwright and Cypress test runs to audit every visited page.',
-      'Catches 100% of color contrast, missing alt attributes, and ARIA role mismatch violations in CI.',
-      'Generates detailed HTML compliance audits highlighting exact offending DOM nodes and WCAG guideline IDs.',
-      'Integrated keyboard navigation and focus trap automated assertions.',
+      '5-Layer Defense-in-Depth A11y Architecture: Orchestrates unit component assertions (Vitest + jest-axe), browser E2E audits (@axe-core/playwright), keyboard focus traps, assistive tech live regions, and CI multi-route headless crawlers (Pa11y).',
+      'WCAG 2.1 & 2.2 Level AA & AAA Standards Enforcement: Automatically audits Bypass Blocks (2.4.1), Focus Traps (2.4.3), Focus Visible Rings (2.4.7), Focus Appearance (2.4.11), Contrast Minimum (1.4.3 >= 4.5:1), and High-Contrast Mode (1.4.6 >= 7:1).',
+      'WAI-ARIA 1.2 Keyboard Ergonomics: Enforces strict focus containment in modal dialogs with Escape key restoration, and full arrow key navigation across tablists (ArrowRight/ArrowLeft/Home/End) with dynamic aria-selected updates.',
+      'Assistive Technology Live Region Verification: Automates verification of asynchronous balance sync and transactional notifications routed through aria-live="polite" and aria-live="assertive" announcer channels.',
+      'Controlled Defects Sandbox & Negative Testing: Features a dedicated violations sandbox to deterministically assert that test linters and crawlers intercept intentional defects (missing form labels, low contrast, broken aria attributes).',
+      'Multi-Engine Compliance Reporting & PR Gating: Automatically generates standalone HTML audit reports via axe-html-reporter, CI telemetry JSON, and executive markdown scorecards (ACCESSIBILITY_SCORECARD.md) in GitHub Actions.',
     ],
     codeSnippet: {
-      filename: 'tests/a11y/wcag.spec.ts',
+      filename: 'tests/e2e/wcag-compliance.spec.ts',
       language: 'typescript',
       code: `import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
+import { runAxeAudit, formatAxeViolations, STANDARD_WCAG_AA_TAGS } from '../utils/axe-helper';
 
-test('verify critical pages comply with WCAG 2.1 AA standards', async ({ page }) => {
-  await page.goto('/checkout');
-  
-  const accessibilityScanResults = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-    .analyze();
+test.describe('WCAG 2.1 & 2.2 Level AA Compliance Audits', () => {
+  test('Dashboard page must satisfy WCAG 2.1 & 2.2 Level AA standards', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
 
-  // Fail build if any critical or serious accessibility violations are found
-  expect(accessibilityScanResults.violations).toEqual([]);
+    // Run axe audit with HTML & JSON report generation
+    const results = await runAxeAudit(page, {
+      tags: STANDARD_WCAG_AA_TAGS,
+      reportName: 'wcag-audit-dashboard'
+    });
+
+    if (results.violations.length > 0) {
+      console.error(formatAxeViolations(results.violations));
+    }
+
+    expect(
+      results.violations,
+      \`Expected zero WCAG AA violations on Dashboard, found \${results.violations.length}\`
+    ).toEqual([]);
+  });
+
+  test('Quick Transfer Modal Dialog must satisfy WCAG standards and trap focus', async ({ page }) => {
+    await page.goto('/');
+    await page.click('[data-testid="open-quick-transfer-btn"]');
+    await expect(page.locator('[data-testid="accessible-modal"]')).toBeVisible();
+
+    // Scope audit specifically to the interactive modal dialog component
+    const results = await runAxeAudit(page, {
+      tags: STANDARD_WCAG_AA_TAGS,
+      include: '[data-testid="accessible-modal"]',
+      reportName: 'wcag-audit-modal-dialog'
+    });
+
+    expect(results.violations).toEqual([]);
+  });
 });`,
     },
   },
