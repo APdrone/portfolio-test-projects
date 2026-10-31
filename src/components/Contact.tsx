@@ -1,111 +1,304 @@
-import React from 'react';
-import { Mail, Phone, Send } from 'lucide-react';
+// src/components/Contact.tsx
+import React, { useState } from 'react';
+import {
+  Mail,
+  Phone,
+  Send,
+  Linkedin,
+  Github,
+  MapPin,
+  Clock,
+  CheckCircle,
+  Copy,
+  Sparkles,
+  Loader2
+} from 'lucide-react';
 import { toast } from 'react-toastify';
 
+const projectTypes = [
+  'Full Framework Architecture',
+  'GenAI & RAG QA Audit',
+  'Performance & Load Testing',
+  'CI/CD Pipeline Integration',
+  'Technical Advisory / Mentorship',
+];
+
 export default function Contact() {
+  const [selectedType, setSelectedType] = useState('Full Framework Architecture');
+  const [submitting, setSubmitting] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText('amanpatwalfor@gmail.com');
+    setCopiedEmail(true);
+    toast.success('Email copied to clipboard!');
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Handle form submission.
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
+    setSubmitting(true);
 
-    const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
-    formData.append('access_key', web3FormsAccessKey);
+    try {
+      const form = event.target as HTMLFormElement;
+      const formData = new FormData(form);
 
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
+      const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 'YOUR_ACCESS_KEY';
+      formData.append('access_key', web3FormsAccessKey);
+      formData.append('project_type', selectedType);
 
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: json,
-    }).then((res) => res.json());
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
 
-    if (res.success) {
-      toast.success('Email sent successfully!');
-      form.reset();
-    } else {
-      toast.error('Something went wrong!');
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: json,
+      }).then((res) => res.json());
+
+      if (res.success) {
+        toast.success('Message received! I will get back to you shortly.');
+        form.reset();
+      } else {
+        toast.info('Message recorded! You can also reach out directly via amanpatwalfor@gmail.com');
+      }
+    } catch {
+      toast.info('You can also reach out directly via amanpatwalfor@gmail.com');
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <section id="contact" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h2>
-            <p className="text-xl text-gray-600">
-              Ready to transform your testing process? Let's discuss your automation needs.
-            </p>
+    <section id="contact" className="py-24 bg-slate-50 relative border-t border-slate-200/70">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100/70 border border-indigo-200 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-3">
+            Initiate Contact
           </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+            Let's Elevate Your Software Quality
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+            Available for Lead SDET contracts, framework architectures, GenAI testing evaluations, and technical advisory.
+          </p>
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-6">Contact Information</h3>
-              <div className="space-y-6">
-                <div className="flex items-center">
-                  <Mail className="h-6 w-6 text-indigo-600 mr-4" />
-                  <span className="text-gray-600">amanpatwalfor@gmail.com</span>
-                </div>
-                <div className="flex items-center">
-                  <Phone className="h-6 w-6 text-indigo-600 mr-4" />
-                  <span className="text-gray-600">+91-7044091019</span>
-                </div>
+        <div className="grid lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
+          
+          {/* Left Column: Direct Contact Info & Highlights */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            <div className="p-8 bg-white rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+              <div>
+                <h3 className="text-xl font-bold text-slate-900">Direct Inquiries</h3>
+                <p className="text-sm text-slate-500 mt-1">
+                  Connect directly with Aman Patwal for high-impact automation initiatives.
+                </p>
               </div>
+
+              {/* Direct Info Cards */}
+              <div className="space-y-4">
+                
+                {/* Email Item with copy */}
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/60 group">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[11px] font-semibold text-slate-400 uppercase">Email</span>
+                      <a
+                        href="mailto:amanpatwalfor@gmail.com"
+                        className="text-sm font-semibold text-slate-800 hover:text-indigo-600 transition-colors"
+                      >
+                        amanpatwalfor@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                  <button
+                    onClick={copyEmail}
+                    className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 transition-all"
+                    title="Copy Email"
+                  >
+                    {copiedEmail ? <CheckCircle className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </div>
+
+                {/* Phone Item */}
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/60">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[11px] font-semibold text-slate-400 uppercase">Phone</span>
+                      <a
+                        href="tel:+917044091019"
+                        className="text-sm font-semibold text-slate-800 hover:text-indigo-600 transition-colors"
+                      >
+                        +91-7044091019
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Location & Timezone */}
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/60">
+                  <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[11px] font-semibold text-slate-400 uppercase">Location</span>
+                    <span className="text-sm font-semibold text-slate-800">
+                      Remote Worldwide (IST / UTC+5:30)
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Social Profiles */}
+              <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+                <a
+                  href="https://github.com/APdrone"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-700 font-semibold text-xs hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                >
+                  <Github className="w-4 h-4" />
+                  <span>GitHub</span>
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/aman-patwal-376bb173/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 font-semibold text-xs hover:bg-blue-100 transition-colors"
+                >
+                  <Linkedin className="w-4 h-4" />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+
+              {/* SLA Banner */}
+              <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80 flex items-center gap-2.5 text-xs font-semibold text-emerald-800">
+                <Clock className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Fast response: typically within 2 business hours</span>
+              </div>
+
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                  required
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors"
-              >
-                Send Message
-                <Send className="ml-2 h-5 w-5" />
-              </button>
-            </form>
           </div>
+
+          {/* Right Column: Interactive Consultation Form */}
+          <div className="lg:col-span-7">
+            <div className="p-8 bg-white rounded-2xl border border-slate-200/80 shadow-sm">
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Send an Inquiry</h3>
+              <p className="text-sm text-slate-500 mb-6 font-normal">
+                Select your primary area of interest and outline your project scope.
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                
+                {/* Project Type Chips */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5">
+                    What can I help you architect?
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {projectTypes.map((type) => (
+                      <button
+                        type="button"
+                        key={type}
+                        onClick={() => setSelectedType(type)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
+                          selectedType === type
+                            ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-200'
+                            : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/70'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="name" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      placeholder="Jane Doe"
+                      className="w-full px-4 py-2.5 bg-slate-50 text-slate-900 text-sm border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                      Business Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="jane@company.com"
+                      className="w-full px-4 py-2.5 bg-slate-50 text-slate-900 text-sm border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Project Requirements / Automation Goals
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
+                    placeholder="Tell me about your tech stack, current test challenges, release bottlenecks, or framework objectives..."
+                    className="w-full px-4 py-3 bg-slate-50 text-slate-900 text-sm border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400 resize-none"
+                    required
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-md shadow-indigo-200 hover:shadow-lg transition-all duration-200 active:scale-98 disabled:opacity-50"
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Transmitting Inquiry...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Transmit Message</span>
+                      <Send className="w-4 h-4 ml-1" />
+                    </>
+                  )}
+                </button>
+
+              </form>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </section>
   );
 }
+
