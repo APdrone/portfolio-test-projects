@@ -78,16 +78,16 @@ export default function Hero() {
           setIsRunning(false);
           return 100;
         }
-        return prev + 25;
+        return prev + 20;
       });
-    }, 280);
+    }, 320);
   };
 
   return (
-    <section id="hero" className="relative pt-32 pb-24 md:py-36 overflow-hidden mesh-gradient-hero tech-grid-pattern border-b border-slate-200/60">
+    <section id="hero" className="relative pt-32 pb-24 md:py-36 overflow-hidden mesh-gradient-hero tech-grid-pattern border-b border-slate-200/60 dark:border-slate-850">
       {/* Background ambient decorative blurs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-indigo-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute top-1/3 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-indigo-400/10 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/3 right-10 w-96 h-96 bg-purple-400/10 dark:bg-purple-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -96,27 +96,27 @@ export default function Hero() {
           <div className="lg:col-span-7 space-y-6">
             
             {/* Live Availability Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-indigo-50/90 border border-indigo-200/70 text-indigo-900 text-xs sm:text-sm font-semibold shadow-sm">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-indigo-50/90 dark:bg-indigo-950/70 border border-indigo-200/70 dark:border-indigo-800/70 text-indigo-900 dark:text-indigo-200 text-xs sm:text-sm font-semibold shadow-sm">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
               <span>Lead SDET & Automation Architect</span>
-              <span className="hidden sm:inline-block text-indigo-300">•</span>
-              <span className="hidden sm:inline-block text-slate-600 font-normal">Available for Advisory & High-Impact Projects</span>
+              <span className="hidden sm:inline-block text-indigo-300 dark:text-indigo-600">•</span>
+              <span className="hidden sm:inline-block text-slate-600 dark:text-slate-300 font-normal">Available for Advisory & High-Impact Projects</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.12]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.12]">
               Architecting{' '}
-              <span className="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 dark:from-indigo-400 dark:via-indigo-300 dark:to-purple-400 bg-clip-text text-transparent">
                 Zero-Flake Automation
               </span>{' '}
               & High-Velocity CI/CD
             </h1>
 
             {/* Sub-headline */}
-            <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl font-normal">
+            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl font-normal">
               10+ years driving enterprise quality engineering across Web, Mobile, API, and GenAI platforms.
               I help tech leaders eliminate release bottlenecks, cut cycle times by 35%+, and guarantee defect-free deployments.
             </p>
@@ -125,7 +125,7 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-3.5 pt-2">
               <button
                 onClick={() => goToSection('contact')}
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-white font-semibold text-sm sm:text-base bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-md shadow-indigo-200/80 hover:shadow-lg transition-all duration-200 active:scale-95 group"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-white font-semibold text-sm sm:text-base bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-md shadow-indigo-200/80 dark:shadow-indigo-950/80 hover:shadow-lg transition-all duration-200 active:scale-95 group"
               >
                 <span>Start a Consultation</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -133,9 +133,9 @@ export default function Hero() {
 
               <button
                 onClick={() => goToSection('portfolio')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-slate-800 font-semibold text-sm sm:text-base bg-white hover:bg-slate-50 border border-slate-300 shadow-sm hover:shadow transition-all duration-200 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-slate-800 dark:text-slate-200 font-semibold text-sm sm:text-base bg-white dark:bg-slate-900/90 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 shadow-sm hover:shadow transition-all duration-200 active:scale-95"
               >
-                <Terminal className="w-4 h-4 text-indigo-600" />
+                <Terminal className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 <span>Explore Frameworks</span>
               </button>
 
@@ -143,7 +143,7 @@ export default function Hero() {
                 href="https://github.com/APdrone"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-slate-700 font-medium text-sm sm:text-base bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-slate-700 dark:text-slate-300 font-medium text-sm sm:text-base bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors"
                 title="GitHub Repositories"
               >
                 <Github className="w-4 h-4" />
@@ -154,34 +154,34 @@ export default function Hero() {
                 href={RESUME_URLS.view}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-indigo-700 font-semibold text-sm sm:text-base bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/80 shadow-sm hover:shadow transition-all duration-200 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-indigo-700 dark:text-indigo-300 font-semibold text-sm sm:text-base bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200/80 dark:border-indigo-800/80 shadow-sm hover:shadow transition-all duration-200 active:scale-95"
                 title="View & Download Latest Resume (Google Drive)"
               >
-                <FileText className="w-4 h-4 text-indigo-600" />
+                <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 <span>Resume (PDF)</span>
               </a>
             </div>
 
             {/* High-Impact Stat Badges */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-200/70">
-              <div className="p-3 bg-white/70 rounded-xl border border-slate-200/60 shadow-sm">
-                <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 tracking-tight">100+</div>
-                <div className="text-xs text-slate-500 font-medium mt-0.5">Suites Automated</div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-200/70 dark:border-slate-800/80">
+              <div className="p-3 bg-white/70 dark:bg-slate-900/70 rounded-xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm">
+                <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 tracking-tight">100+</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Suites Automated</div>
               </div>
 
-              <div className="p-3 bg-white/70 rounded-xl border border-slate-200/60 shadow-sm">
-                <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 tracking-tight">10+ Yrs</div>
-                <div className="text-xs text-slate-500 font-medium mt-0.5">QA Leadership</div>
+              <div className="p-3 bg-white/70 dark:bg-slate-900/70 rounded-xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm">
+                <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 tracking-tight">10+ Yrs</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">QA Leadership</div>
               </div>
 
-              <div className="p-3 bg-white/70 rounded-xl border border-slate-200/60 shadow-sm">
-                <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 tracking-tight">-30%</div>
-                <div className="text-xs text-slate-500 font-medium mt-0.5">Release Validation Time</div>
+              <div className="p-3 bg-white/70 dark:bg-slate-900/70 rounded-xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm">
+                <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">-30%</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Release Validation Time</div>
               </div>
 
-              <div className="p-3 bg-white/70 rounded-xl border border-slate-200/60 shadow-sm">
-                <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 tracking-tight">99.8%</div>
-                <div className="text-xs text-slate-500 font-medium mt-0.5">Suite Reliability</div>
+              <div className="p-3 bg-white/70 dark:bg-slate-900/70 rounded-xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm">
+                <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 tracking-tight">99.8%</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Suite Reliability</div>
               </div>
             </div>
 
@@ -205,10 +205,17 @@ export default function Hero() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-mono bg-emerald-950/70 text-emerald-400 border border-emerald-800/50">
-                    <CheckCircle2 className="w-3 h-3" />
-                    <span>CI: PASSING</span>
-                  </span>
+                  {isRunning ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-amber-950/70 text-amber-300 border border-amber-800/60 animate-pulse">
+                      <RotateCcw className="w-3 h-3 animate-spin text-amber-400" />
+                      <span>CI: RUNNING ({progress}%)</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-mono bg-emerald-950/70 text-emerald-400 border border-emerald-800/50">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                      <span>CI: PASSING</span>
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -262,33 +269,67 @@ export default function Hero() {
 
                 {/* Tests List */}
                 <div className="space-y-2.5">
-                  {suiteData[activeTab].tests.map((test, index) => (
-                    <div
-                      key={test.id}
-                      className="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800/80 flex items-start justify-between gap-3 group hover:border-slate-700 transition-colors"
-                    >
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                          <span className="text-slate-200 font-medium leading-snug">{test.name}</span>
+                  {suiteData[activeTab].tests.map((test, index) => {
+                    const totalTests = suiteData[activeTab].tests.length;
+                    const currentStep = Math.floor((progress / 100) * totalTests);
+                    const isTestPassed = !isRunning || index < currentStep;
+                    const isTestRunning = isRunning && index === currentStep;
+
+                    return (
+                      <div
+                        key={test.id}
+                        className={`p-2.5 rounded-lg border transition-colors flex items-start justify-between gap-3 ${
+                          isTestRunning
+                            ? 'bg-amber-950/20 border-amber-800/40'
+                            : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700'
+                        }`}
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            {isTestPassed ? (
+                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                            ) : isTestRunning ? (
+                              <RotateCcw className="w-4 h-4 text-amber-400 animate-spin shrink-0" />
+                            ) : (
+                              <div className="w-4 h-4 rounded-full border border-slate-700 flex items-center justify-center shrink-0">
+                                <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                              </div>
+                            )}
+                            <span className="text-slate-200 font-medium leading-snug">{test.name}</span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 pl-6 leading-tight">{test.details}</p>
                         </div>
-                        <p className="text-[11px] text-slate-400 pl-6 leading-tight">{test.details}</p>
+                        <span className="shrink-0 text-[11px] text-slate-400 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">
+                          {isTestRunning ? (
+                            <span className="text-amber-400 font-semibold">running...</span>
+                          ) : isTestPassed ? (
+                            test.duration
+                          ) : (
+                            <span className="text-slate-500">queued</span>
+                          )}
+                        </span>
                       </div>
-                      <span className="shrink-0 text-[11px] text-slate-400 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">
-                        {isRunning && index === 2 ? 'running...' : test.duration}
-                      </span>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Terminal Footer / Interactive Trigger */}
                 <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
                   <div className="flex items-center gap-3 text-[11px] text-slate-400">
-                    <span className="flex items-center gap-1 text-emerald-400 font-semibold">
-                      <ShieldCheck className="w-3.5 h-3.5" /> 100% Passed
-                    </span>
-                    <span>•</span>
-                    <span>Flake: 0.0%</span>
+                    {isRunning ? (
+                      <span className="flex items-center gap-1.5 text-amber-300 font-medium">
+                        <RotateCcw className="w-3.5 h-3.5 animate-spin text-amber-400" />
+                        <span>Running workers ({progress}%)</span>
+                      </span>
+                    ) : (
+                      <>
+                        <span className="flex items-center gap-1 text-emerald-400 font-semibold">
+                          <ShieldCheck className="w-3.5 h-3.5" /> 100% Passed
+                        </span>
+                        <span>•</span>
+                        <span>Flake: 0.0%</span>
+                      </>
+                    )}
                   </div>
 
                   <button

@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play, Pause, X, Github, ArrowRight, ExternalLink, Search, Lock } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Play, X, Github, ArrowRight, ExternalLink, Search, Lock } from 'lucide-react';
 import { projects } from '../data/projects';
 
 type ViewMode = 'images' | 'video';
@@ -150,10 +150,39 @@ const MediaModal: React.FC<{
 };
 
 export default function Portfolio() {
-  const [filter, setFilter] = useState<string>('All');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filterFromUrl = searchParams.get('filter');
+
+  const [filter, setFilter] = useState<string>(() => {
+    if (filterFromUrl && categories.includes(filterFromUrl)) {
+      return filterFromUrl;
+    }
+    return 'All';
+  });
+
   const [q, setQ] = useState('');
   const [modalIndex, setModalIndex] = useState<number | null>(null);
   const [modalMode, setModalMode] = useState<ViewMode>('images');
+
+  // Sync if URL param changes (e.g., from external links or browser navigation)
+  useEffect(() => {
+    if (filterFromUrl && categories.includes(filterFromUrl)) {
+      setFilter(filterFromUrl);
+    } else if (!filterFromUrl) {
+      setFilter('All');
+    }
+  }, [filterFromUrl]);
+
+  const handleFilterSelect = (cat: string) => {
+    setFilter(cat);
+    const newParams = new URLSearchParams(searchParams);
+    if (cat === 'All') {
+      newParams.delete('filter');
+    } else {
+      newParams.set('filter', cat);
+    }
+    setSearchParams(newParams, { replace: true });
+  };
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -169,33 +198,33 @@ export default function Portfolio() {
   }, [filter, q]);
 
   return (
-    <section id="portfolio" className="py-24 bg-slate-50 relative border-b border-slate-200/70">
+    <section id="portfolio" className="py-24 bg-slate-50 dark:bg-slate-900/40 relative border-b border-slate-200/70 dark:border-slate-850">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100/70 border border-indigo-200 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100/70 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/70 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wider mb-3">
             Production Frameworks
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Featured Automation Architectures
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
             Real-world enterprise frameworks engineered for resilience, high concurrency, and zero false positives.
           </p>
         </div>
 
         {/* Filter Controls & Search */}
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-10 pb-6 border-b border-slate-200/70">
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-10 pb-6 border-b border-slate-200/70 dark:border-slate-850">
           <div className="flex flex-wrap gap-2 justify-center md:justify-start">
             {categories.map((c) => (
               <button
                 key={c}
-                onClick={() => setFilter(c)}
+                onClick={() => handleFilterSelect(c)}
                 className={`px-4 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
                   filter === c
-                    ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-200 scale-102'
-                    : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/80'
+                    ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-200 dark:shadow-indigo-950 scale-102'
+                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
                 }`}
               >
                 {c}
@@ -209,7 +238,7 @@ export default function Portfolio() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search projects or tags..."
-              className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-800 placeholder-slate-400 shadow-2xs"
+              className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-sm"
             />
           </div>
         </div>
@@ -219,7 +248,7 @@ export default function Portfolio() {
           {filtered.map((item) => (
             <div
               key={item.id}
-              className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden border border-slate-200/80 hover:border-indigo-300 shadow-sm hover:shadow-xl hover:shadow-indigo-100/40 transition-all duration-300"
+              className="group flex flex-col justify-between bg-white dark:bg-slate-900/80 rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-500/50 shadow-sm hover:shadow-xl hover:shadow-indigo-100/40 dark:hover:shadow-indigo-950/40 transition-all duration-300"
             >
               <div>
                 {/* Media Preview Box */}
@@ -278,16 +307,16 @@ export default function Portfolio() {
                 {/* Content Box */}
                 <div className="p-6">
                   <div className="flex items-start justify-between gap-2 mb-2">
-                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-snug">
                       {item.title}
                     </h3>
 
                     {item.isPrivate ? (
                       <span
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200 shrink-0"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 shrink-0"
                         title="Enterprise Private Core SDK (Proprietary Architecture)"
                       >
-                        <Lock className="w-3 h-3 text-amber-600" />
+                        <Lock className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                         <span>Private SDK</span>
                       </span>
                     ) : item.github ? (
@@ -295,7 +324,7 @@ export default function Portfolio() {
                         href={item.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors shrink-0"
+                        className="p-1.5 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors shrink-0"
                         title="GitHub Repository"
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -305,22 +334,22 @@ export default function Portfolio() {
                   </div>
 
                   {item.ecosystem && (
-                    <div className="mb-3 px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200/70 text-[11px] text-slate-600 flex items-center justify-between">
-                      <span className="font-semibold text-slate-500">Tier:</span>
-                      <span className="font-mono text-indigo-600 truncate ml-1 font-medium">{item.ecosystem.role}</span>
+                    <div className="mb-3 px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/80 text-[11px] text-slate-600 dark:text-slate-300 flex items-center justify-between">
+                      <span className="font-semibold text-slate-500 dark:text-slate-400">Tier:</span>
+                      <span className="font-mono text-indigo-600 dark:text-indigo-400 truncate ml-1 font-medium">{item.ecosystem.role}</span>
                     </div>
                   )}
 
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4 line-clamp-3">
                     {item.description}
                   </p>
 
                   {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-100">
+                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
                     {item.tags.map((tag, ti) => (
                       <span
                         key={ti}
-                        className="px-2.5 py-0.5 bg-slate-100 text-slate-700 rounded-md text-[11px] font-mono font-medium"
+                        className="px-2.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-md text-[11px] font-mono font-medium"
                       >
                         {tag}
                       </span>
@@ -330,20 +359,20 @@ export default function Portfolio() {
               </div>
 
               {/* Bottom Action Footer */}
-              <div className="px-6 py-4 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between">
+              <div className="px-6 py-4 bg-slate-50/70 dark:bg-slate-900/90 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <button
                   onClick={() => {
                     setModalIndex(projects.findIndex((p) => p.id === item.id));
                     setModalMode('images');
                   }}
-                  className="text-xs font-semibold text-slate-600 hover:text-indigo-600 transition-colors"
+                  className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                 >
                   Quick Preview
                 </button>
 
                 <Link
                   to={`/project/${item.id}`}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-700 group/link"
+                  className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 group/link"
                 >
                   <span>Architecture Details</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" />
@@ -368,4 +397,3 @@ export default function Portfolio() {
     </section>
   );
 }
-

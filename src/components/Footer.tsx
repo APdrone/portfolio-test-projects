@@ -1,25 +1,57 @@
 // src/components/Footer.tsx
 import React from 'react';
-import { Terminal, Github, Linkedin, Mail, ArrowUp, Heart } from 'lucide-react';
+import { Terminal, Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Footer() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const goToSection = (id: string) => {
+    if (location.pathname === '/' || location.pathname === '') {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    navigate('/', { replace: false });
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+  };
+
+  const navLinks = [
+    { label: 'Overview', id: 'hero' },
+    { label: 'Services', id: 'services' },
+    { label: 'Tech Stack', id: 'technologies' },
+    { label: 'Experience', id: 'experience' },
+    { label: 'Portfolio', id: 'portfolio' },
+    { label: 'Engineering Standards', id: 'principles' },
+  ];
+
   return (
-    <footer className="bg-slate-950 text-slate-400 border-t border-slate-850 pt-16 pb-12">
+    <footer className="bg-slate-950 text-slate-400 border-t border-slate-800/80 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-900">
           
           {/* Brand & Mission (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md">
+            <button
+              onClick={() => goToSection('hero')}
+              className="flex items-center gap-3 text-left group focus:outline-none"
+            >
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
                 <Terminal className="h-4 w-4 stroke-[2.2]" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">Scriptcrux</span>
-            </div>
+              <span className="text-xl font-bold tracking-tight text-white group-hover:text-indigo-400 transition-colors">
+                Scriptcrux
+              </span>
+            </button>
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
               Portfolio and engineering practice of Aman Patwal — Lead SDET & QA Automation Architect.
               Engineering zero-flake test architectures, high-concurrency performance benchmarks, and GenAI guardrails.
@@ -53,28 +85,20 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links with Smart Router Nav */}
           <div>
             <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4">Navigation</h4>
             <ul className="space-y-2.5 text-sm">
-              <li>
-                <a href="#hero" className="hover:text-indigo-400 transition-colors">Overview</a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-indigo-400 transition-colors">Services</a>
-              </li>
-              <li>
-                <a href="#technologies" className="hover:text-indigo-400 transition-colors">Tech Stack</a>
-              </li>
-              <li>
-                <a href="#experience" className="hover:text-indigo-400 transition-colors">Experience</a>
-              </li>
-              <li>
-                <a href="#portfolio" className="hover:text-indigo-400 transition-colors">Portfolio</a>
-              </li>
-              <li>
-                <a href="#principles" className="hover:text-indigo-400 transition-colors">Engineering Standards</a>
-              </li>
+              {navLinks.map((item) => (
+                <li key={item.id}>
+                  <button
+                    onClick={() => goToSection(item.id)}
+                    className="hover:text-indigo-400 text-slate-400 transition-colors text-left"
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -102,12 +126,12 @@ export default function Footer() {
               <p className="text-xs text-slate-500 leading-relaxed">
                 Available for advisory roles, enterprise framework audits, and Lead SDET engagements worldwide.
               </p>
-              <a
-                href="#contact"
-                className="inline-block mt-2 text-xs font-bold text-indigo-400 hover:text-indigo-300 underline underline-offset-4"
+              <button
+                onClick={() => goToSection('contact')}
+                className="inline-block mt-2 text-xs font-bold text-indigo-400 hover:text-indigo-300 underline underline-offset-4 text-left"
               >
                 Schedule Consultation →
-              </a>
+              </button>
             </div>
           </div>
 

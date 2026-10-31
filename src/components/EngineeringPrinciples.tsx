@@ -1,14 +1,12 @@
 // src/components/EngineeringPrinciples.tsx
 import React from 'react';
 import {
-  ShieldAlert,
   GitPullRequest,
   CheckCircle,
   Eye,
   Bot,
   Gauge,
   Layers,
-  ArrowRight
 } from 'lucide-react';
 
 const principles = [
@@ -64,18 +62,18 @@ const principles = [
 
 export default function EngineeringPrinciples() {
   return (
-    <section id="principles" className="py-24 bg-white relative">
+    <section id="principles" className="py-24 bg-white dark:bg-slate-950 relative border-b border-slate-200/60 dark:border-slate-850">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-800/70 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wider mb-3">
             Core Engineering Principles
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             How I Guarantee Software Resilience
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
             Quality is not an afterthought or an inspection phase — it is an architectural discipline designed into every layer of development.
           </p>
         </div>
@@ -87,30 +85,30 @@ export default function EngineeringPrinciples() {
             return (
               <div
                 key={idx}
-                className="p-8 rounded-2xl bg-slate-50/60 hover:bg-white border border-slate-200/80 hover:border-indigo-300 shadow-sm hover:shadow-xl hover:shadow-indigo-50 transition-all duration-300 flex flex-col justify-between group"
+                className="p-8 rounded-2xl bg-slate-50/60 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-500/50 shadow-sm hover:shadow-xl hover:shadow-indigo-50 dark:hover:shadow-indigo-950/40 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-600/10 group-hover:bg-indigo-600 text-indigo-600 group-hover:text-white flex items-center justify-center transition-colors duration-200">
+                    <div className="w-12 h-12 rounded-xl bg-indigo-600/10 dark:bg-indigo-500/20 group-hover:bg-indigo-600 text-indigo-600 dark:text-indigo-400 group-hover:text-white flex items-center justify-center transition-colors duration-200">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="text-[11px] font-bold tracking-wide uppercase px-2.5 py-1 bg-white rounded-md border border-slate-200 text-slate-500">
+                    <span className="text-[11px] font-bold tracking-wide uppercase px-2.5 py-1 bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400">
                       {item.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-xs font-semibold text-indigo-600 mt-1 mb-3">
+                  <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 mt-1 mb-3">
                     {item.subtitle}
                   </p>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-200/60 flex items-center text-xs font-semibold text-slate-400 group-hover:text-indigo-600 transition-colors">
+                <div className="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800 flex items-center text-xs font-semibold text-slate-400 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                   <span>Battle-tested in enterprise production</span>
                 </div>
               </div>
